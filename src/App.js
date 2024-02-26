@@ -1,6 +1,18 @@
 import { useEffect, useState } from "react";
 import "./index.css";
-import CountryCard from "./CountryCard";
+
+function CountryCard({ country }) {
+  return (
+    <div className="countryCard">
+      <img
+        src={country.flags.png}
+        alt={`Flag of ${country.name.common}`}
+        className="card__img"
+      />
+      <h2>{country.name.common}</h2>
+    </div>
+  );
+}
 
 export default function App() {
   const [countries, setCountries] = useState([]);
