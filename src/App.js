@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import "./index.css";
+import CountryCard from "./CountryCard";
 
 export default function App() {
   const [countries, setCountries] = useState([]);
@@ -20,31 +21,13 @@ export default function App() {
   useEffect(() => {
     if (search) {
       setSearchCountries([
-        ...countries.filter((country) => country.name.common.includes(search)),
+        ...countries.filter((country) =>
+          country.name.common.toLowerCase().includes(search.toLowerCase())
+        ),
       ]);
     }
   }, [search, countries]);
-  const containerStyle = {
-    display: "flex",
-    flexWrap: "wrap",
-    justifyContent: "center",
-  };
-  const cardStyle = {
-    width: "200px",
-    display: "flex",
-    flexDirection: "column",
-    justifyContent: "center",
-    alignItems: "center",
-    border: "1px solid #808080",
-    padding: "10px",
-    margin: "10px",
-    borderRadius: "10px",
-  };
-  const cardImgStyle = {
-    objectfit: "contain",
-    width: "100px",
-    height: "100px",
-  };
+
   return (
     <div className="wrapper">
       <div className="search__wrapper">
@@ -55,28 +38,14 @@ export default function App() {
           onChange={handleSearch}
         />
       </div>
-      <div style={containerStyle}>
+      <div class="containerStyle">
         {search &&
           searchedCountries.map((country) => (
-            <div style={cardStyle}>
-              <img
-                src={country.flags.png}
-                alt={`Flag of ${country.name.common}`}
-                style={cardImgStyle}
-              />
-              <h2 style={{ textAlign: "center" }}>{country.name.common}</h2>
-            </div>
+            <CountryCard key={country.name.common} country={country} />
           ))}
         {!search &&
           countries.map((country) => (
-            <div style={cardStyle}>
-              <img
-                src={country.flags.png}
-                alt={`Flag of ${country.name.common}`}
-                style={cardImgStyle}
-              />
-              <h2 style={{ textAlign: "center" }}>{country.name.common}</h2>
-            </div>
+            <CountryCard key={country.name.common} country={country} />
           ))}
       </div>
     </div>
